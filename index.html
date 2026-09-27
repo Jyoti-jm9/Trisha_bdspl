@@ -301,7 +301,7 @@
                             শুভ জন্মদিন
                         </h3>
                         <p class="text-xs sm:text-sm text-rose-200/80 font-bengali-sans mt-3 leading-relaxed">
-                            আজকের দিনটি তোমার জীবনে বয়ে আনুক অশেষ আনন্দ, শান্তি আর নতুন সব স্বপ্নের ছোঁয়া!
+                            আজকের দিনটি তোমার জীবনে বয়ে আনুক অশেষ আনন্দ, শান্তি আর নতুন সব স্বপ্নের ছোঁয়া!
                         </p>
                     </div>
 
@@ -407,8 +407,8 @@
 
         </div>
 
-        <!-- Ambient Audio Source Fallback -->
-        <audio id="bg-music" preload="auto" loop src="https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf07a.mp3?filename=lofi-study-112191.mp3"></audio>
+        <!-- Ambient Audio Source -->
+        <audio id="bg-audio" preload="auto" loop src="InShot_20260927_013825476.mp3"></audio>
 
         <!-- Footer -->
         <footer class="text-center text-[10px] text-slate-400/60 pb-1">
@@ -427,6 +427,16 @@
         let currentPoemLineIndex = 0;
         const poemLines = document.querySelectorAll('.poem-line');
         const ULTRA_SLOW_DELAY_MS = 5500; // 5.5 seconds per line for deep romantic reading
+
+        /* Audio DOM Elements */
+        const audio = document.getElementById('bg-audio');
+        const playBtn = document.getElementById('play-btn');
+        const playIcon = document.getElementById('play-icon');
+        const progressBar = document.getElementById('progress-bar');
+        const currentTimeEl = document.getElementById('current-time');
+        const totalDurationEl = document.getElementById('total-duration');
+        const vinyl = document.getElementById('vinyl-record');
+        const tonearm = document.getElementById('tonearm');
 
         function updateCardDeck() {
             for (let i = 0; i < totalCards; i++) {
@@ -558,26 +568,16 @@
         }
 
         /* AUDIO PLAYER LOGIC */
-        // Music Player Logic
-const audio = document.getElementById('bg-audio');
-const playBtn = document.getElementById('play-btn');
-const playIcon = document.getElementById('play-icon');
-const audioUpload = document.getElementById('audio-upload');
-
-// 🎵 ADD THIS LINE BELOW to point to your audio file in the same folder:
-audio.src = "InShot_20260927_013825476.mp3"; 
-
-// Update song title UI (optional display name):
-document.getElementById('song-title').textContent = "Your Special Birthday Track";
-document.getElementById('artist-name').textContent = "Dedicated to You ❤️";
-
         function togglePlay() {
             if (audio.paused) {
-                audio.play();
-                playIcon.classList.remove('fa-play');
-                playIcon.classList.add('fa-pause');
-                vinyl.classList.remove('paused');
-                tonearm.style.transform = 'rotate(0deg)';
+                audio.play().then(() => {
+                    playIcon.classList.remove('fa-play');
+                    playIcon.classList.add('fa-pause');
+                    vinyl.classList.remove('paused');
+                    tonearm.style.transform = 'rotate(0deg)';
+                }).catch(err => {
+                    console.error("Playback failed:", err);
+                });
             } else {
                 audio.pause();
                 playIcon.classList.remove('fa-pause');
@@ -618,11 +618,12 @@ document.getElementById('artist-name').textContent = "Dedicated to You ❤️";
                 audio.src = objectUrl;
                 document.getElementById('file-label').textContent = file.name.length > 20 ? file.name.substring(0, 18) + '...' : file.name;
                 
-                audio.play();
-                playIcon.classList.remove('fa-play');
-                playIcon.classList.add('fa-pause');
-                vinyl.classList.remove('paused');
-                tonearm.style.transform = 'rotate(0deg)';
+                audio.play().then(() => {
+                    playIcon.classList.remove('fa-play');
+                    playIcon.classList.add('fa-pause');
+                    vinyl.classList.remove('paused');
+                    tonearm.style.transform = 'rotate(0deg)';
+                });
             }
         }
 
