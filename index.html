@@ -549,8 +549,8 @@
         function triggerConfetti() {
             if (typeof confetti === 'function') {
                 confetti({
-                    particleCount: 90,
-                    spread: 80,
+                    particleCount: 200,
+                    spread: 180,
                     origin: { y: 0.6 },
                     colors: ['#f43f5e', '#fbbf24', '#f472b6', '#ffffff', '#e11d48']
                 });
@@ -558,14 +558,18 @@
         }
 
         /* AUDIO PLAYER LOGIC */
-        const audio = document.getElementById('bg-music');
-        const playBtn = document.getElementById('play-btn');
-        const playIcon = document.getElementById('play-icon');
-        const vinyl = document.getElementById('vinyl-record');
-        const tonearm = document.getElementById('tonearm');
-        const progressBar = document.getElementById('progress-bar');
-        const currentTimeEl = document.getElementById('current-time');
-        const totalDurationEl = document.getElementById('total-duration');
+        // Music Player Logic
+const audio = document.getElementById('bg-audio');
+const playBtn = document.getElementById('play-btn');
+const playIcon = document.getElementById('play-icon');
+const audioUpload = document.getElementById('audio-upload');
+
+// 🎵 ADD THIS LINE BELOW to point to your audio file in the same folder:
+audio.src = "InShot_20260927_013825476.mp3"; 
+
+// Update song title UI (optional display name):
+document.getElementById('song-title').textContent = "Your Special Birthday Track";
+document.getElementById('artist-name').textContent = "Dedicated to You ❤️";
 
         function togglePlay() {
             if (audio.paused) {
